@@ -1,18 +1,12 @@
-
 /**
-* limitList
-* =========
-* Used to limit the number of tweet elements on the page.
-* This is so the page is not flooded with old tweet elements.
+* ===================
+* GRAPHICS-HANDLR.js
+* ===================
+*
+* Resonsible for handling the graphics for the app.
 *
 * @since 1.0.0
 */
-function limitList(){
-	if($('.tweets').children().length > 10){
-		$('.tweets').children().last().remove();
-	}
-}
-
 
 var CanvasArea = (function(){
 

@@ -1,3 +1,13 @@
+/**
+* ===================
+* AUDIO-HANDLR.js
+* ===================
+*
+* Resonsible for handling the audio playback for the app.
+*
+* @since 1.0.0
+*/
+
 //River audio file reference
 var river = new Howl({
 	src: ['/audio/river.mp3'],

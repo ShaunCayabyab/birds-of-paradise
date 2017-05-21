@@ -1,0 +1,24 @@
+{
+  "name": "birds-of-paradise",
+  "version": "1.0.0",
+  "description": "Audio representations of Tweets streamed in",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"I don't have any tests soooo...\" && exit 0"
+  },
+  "author": "Shaun Cayabyab",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.3",
+    "fs": "0.0.1-security",
+    "howler": "^2.0.3",
+    "http": "0.0.0",
+    "socket.io": "^2.0.1",
+    "twitter": "^1.7.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}

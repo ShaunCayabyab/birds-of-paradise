@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Birds of Paradise</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/howler/2.0.0/howler.min.js"></script>
+        <script type="text/javascript" src="/src/js/audio-handler.js"></script>
+        <script type="text/javascript" src="/src/js/graphics-handler.js"></script>
+        <script>
+            var socket = io.connect('http://localhost');
+            jQuery(function ($) {
+                var tweetList = $('ul.tweets');
+                socket.on('tweet', function (data) {
+                    tweetList
+                    .prepend('<li>' + data.user + ': ' + data.text + '</li>');
+                    playRandomBird();
+                    CanvasArea.limitTweets();
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <h1>Birds of Paradise</h1>
+        <div id="area">
+        </div>
+        <ul class="tweets"></ul>
+    </body>
+</html>

@@ -1,6 +1,6 @@
 /**
 * ===================
-* AUDIO-HANDLR.js
+* AUDIO-HANDLER.js
 * ===================
 *
 * Resonsible for handling the audio playback for the app.

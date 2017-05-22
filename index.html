@@ -17,21 +17,36 @@
 
                 socket.on('tweet', function (data) {
 
-                    tweetList
-                        .prepend('<li>' + data.user + ': ' + data.text + '</li>');
-
                     CanvasArea.newTweet(data);
                     playRandomBird();
-                    
+
                     CanvasArea.limitTweets();
                 });
             });
         </script>
+        <style>
+            @import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+            html,
+            body,
+            section,
+            div,
+            svg{
+                margin: 0;
+                padding: 0;
+            }
+
+            .header_label{
+                font-family: 'Montserrat', sans-serif;
+            }
+
+            .article_label{
+                font-family: 'Montserrat', sans-serif;
+            }
+        </style>
     </head>
     <body>
-        <h1>Birds of Paradise</h1>
-        <div id="area">
+        <div id="area" style="overflow-x: hidden;">
         </div>
-        <ul class="tweets"></ul>
     </body>
 </html>

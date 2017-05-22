@@ -1,6 +1,6 @@
 /**
 * ===================
-* GRAPHICS-HANDLR.js
+* GRAPHICS-HANDLER.js
 * ===================
 *
 * Resonsible for handling the graphics for the app.
@@ -67,6 +67,7 @@ var CanvasArea = (function(){
 
 		//Update the SVG canvas area
 		svg.attr("width", width).attr("height", height);	
+	
 	}
 
 
@@ -76,8 +77,8 @@ var CanvasArea = (function(){
 	* 
 	* Function used to create a visualization for a new incoming Tweet
 	*
-	* @param someTweet 	The given tweet to create the new graphic of
 	* @since 1.0.0
+	* @param someTweet 	The given tweet to create the new graphic of
 	*/
 	var createNewTweetGraphic = function(someTweet){
 
@@ -89,6 +90,7 @@ var CanvasArea = (function(){
 
 		//Draw the generated graphic
 		graphic.draw();
+
 	}
 
 
@@ -102,11 +104,11 @@ var CanvasArea = (function(){
 	*/
 	var limitList = function(){
 		
-		if( $('.tweets').children().length > 10 ){
+		if( $('.tweets').children().length > 20 ){
 			$('.tweets').children().last().remove();
 		}
 
-		if( $('#svg-area').children().length > 10 ){
+		if( $('#svg-area').children().length > 20 ){
 			$('#svg-area').children().first().remove();
 			graphics_group.splice(1, 1);
 		}
@@ -158,25 +160,37 @@ var CanvasArea = (function(){
 * Position and size are randomized for each individual circle.
 *
 * @since 1.0.0
+* @param someTweetData 	The given Tweet data to create the circle for
+* @param svg_area 		SVG canvas area to draw the circle one
 */
 function TweetCircle(someTweetData, svg_area){
 
 	//this.id = someID;
 	//this.svg_area = some_svg_area;
-	this.radius = 44;
-	this.x = (Math.random() * (svg_area.attr("width") - this.radius)) + this.radius;
-	this.y = (Math.random() * (svg_area.attr("height") - this.radius)) + this.radius;
-	this.color = '#FFF';
-	this.init_opacity = 1;
-	this.opacity = 1;
+	this.radius = (Math.random() * 44) + 5;
+	this.corona_radius = this.radius + 20;
+	this.x = (Math.random() * (svg_area.attr("width") - (this.radius * 2))) + this.radius;
+	this.y = (Math.random() * (svg_area.attr("height") - (this.radius * 2))) + this.radius;
+	
+	this.circle_color = '#E1E8ED';
+	this.text_color = '#FFF';
+
+	this.inner_opacity = 1;
+	this.outer_opacity = 0.3;
 	this.decay = 5000;
+	this.text_decay = 8000;
+
+	//Transition deltas for size
+	this.inner_growth = 20;
+	this.outer_growth = 170;
 
 	this.username = someTweetData.user;
 	this.tweet = someTweetData.text;
 
+
 	/**
 	* draw
-	* ==========
+	* ====
 	*
 	* Function for drawing the circle onto
 	* the SVG canvas area.
@@ -188,17 +202,64 @@ function TweetCircle(someTweetData, svg_area){
 		//Create the container for the circle graphic
 		var circle_area = svg_area.append('g')
 			.attr('transform', 'translate(' + this.x + ', ' + this.y + ')')
-			.attr('fill', this.color)
-			.style('opacity', this.init_opacity);
+			.attr('fill', this.circle_color)
+			.style('opacity', this.inner_opacity);
 	
 		//Add the circle to the window for rendering
 		var circle = circle_area.append('circle');
-		//circle.classed(type, true);
+
+		//Draw and animate the inner circle
 		circle.attr('r', this.radius)
-			.attr('fill', this.color)
+			.attr('fill', this.circle_color)
 			.transition()
+			.attr('r', this.radius + this.inner_growth)
+			.ease(Math.sqrt)
 			.duration(this.decay)
 			.style('opacity', 0)
+			.remove();
+
+		//Add the outer circle
+		var corona = circle_area.append('circle');
+
+		//Draw and animate
+		corona.attr('r', this.corona_radius)
+			.attr('fill', this.circle_color)
+			.style('opacity', this.outer_opacity);
+
+		corona.transition()
+			.attr('r', this.corona_radius + this.outer_growth)
+			.style('opacity', 0)
+			.ease(Math.sqrt)
+			.duration(this.decay)
+			.remove();
+
+		//Add in the Twitter username
+		var tweet_text01 = circle_area.append('text')
+			.text(someTweetData.user + ":")
+			.classed('header-label', true)
+			.attr('text-anchor', 'middle')
+			.attr('font-size', '2em')
+			.style('opacity', '1')
+			.style('color', this.text_color)
+			.style('font-family', "'Montserrat', sans-serif")
+			.transition()
+			.style('opacity', 0)
+			.duration(this.text_decay)
+			.remove();
+	
+		//Add in the Tweet text
+		var tweet_text02 = circle_area.append('text')
+			.attr("dy", "1.5em")
+			.text(someTweetData.text)
+			.classed('article-label', true)
+			.attr('text-anchor', 'middle')
+			.attr('font-size', '0.8em')
+			.style('opacity', '1')
+			.style('color', this.text_color)
+			.style('font-family', "'Montserrat', sans-serif")
+			.transition()
+			.style('opacity', 0)
+			.duration(this.text_decay)
 			.remove();
 	}
 }

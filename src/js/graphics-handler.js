@@ -167,10 +167,10 @@ function TweetCircle(someTweetData, svg_area){
 
 	//this.id = someID;
 	//this.svg_area = some_svg_area;
-	this.radius = (Math.random() * 44) + 5;
-	this.corona_radius = this.radius + 20;
-	this.x = (Math.random() * (svg_area.attr("width") - (this.radius * 2))) + this.radius;
-	this.y = (Math.random() * (svg_area.attr("height") - (this.radius * 2))) + this.radius;
+	this.radius = (Math.random() * 20) + 5;
+	this.corona_radius = this.radius + 40;
+	this.x = ( Math.random() * ( svg_area.attr("width") - ((this.radius * 2) + (this.corona_radius * 2)) ) ) + this.radius;
+	this.y = ( Math.random() * ( svg_area.attr("height") - ((this.radius * 2) + (this.corona_radius * 2) ) )) + this.radius;
 	
 	this.circle_color = '#E1E8ED';
 	this.text_color = '#FFF';
@@ -178,11 +178,12 @@ function TweetCircle(someTweetData, svg_area){
 	this.inner_opacity = 1;
 	this.outer_opacity = 0.3;
 	this.decay = 5000;
+	this.outer_decay = 2500;
 	this.text_decay = 8000;
 
 	//Transition deltas for size
 	this.inner_growth = 20;
-	this.outer_growth = 170;
+	this.outer_growth = 200;
 
 	this.username = someTweetData.user;
 	this.tweet = someTweetData.text;
@@ -230,19 +231,22 @@ function TweetCircle(someTweetData, svg_area){
 			.attr('r', this.corona_radius + this.outer_growth)
 			.style('opacity', 0)
 			.ease(Math.sqrt)
-			.duration(this.decay)
+			.duration(this.outer_decay)
 			.remove();
 
 		//Add in the Twitter username
 		var tweet_text01 = circle_area.append('text')
 			.text(someTweetData.user + ":")
 			.classed('header-label', true)
+			.classed('shadow', true)
 			.attr('text-anchor', 'middle')
-			.attr('font-size', '2em')
+			.attr('font-size', '1.7em')
 			.style('opacity', '1')
 			.style('color', this.text_color)
 			.style('font-family', "'Montserrat', sans-serif")
+			.style('font-weight', 'bold')
 			.transition()
+			.delay(1000)
 			.style('opacity', 0)
 			.duration(this.text_decay)
 			.remove();
@@ -252,12 +256,15 @@ function TweetCircle(someTweetData, svg_area){
 			.attr("dy", "1.5em")
 			.text(someTweetData.text)
 			.classed('article-label', true)
+			.classed('shadow', true)
 			.attr('text-anchor', 'middle')
-			.attr('font-size', '0.8em')
+			.attr('font-size', '0.9em')
 			.style('opacity', '1')
 			.style('color', this.text_color)
 			.style('font-family', "'Montserrat', sans-serif")
+			.style('font-weight', 'bolder')
 			.transition()
+			.delay(1000)
 			.style('opacity', 0)
 			.duration(this.text_decay)
 			.remove();

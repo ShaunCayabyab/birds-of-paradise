@@ -18,7 +18,7 @@
                 socket.on('tweet', function (data) {
 
                     CanvasArea.newTweet(data);
-                    playRandomBird();
+                    AudioHandler.playBird();
 
                     CanvasArea.limitTweets();
                 });
@@ -42,6 +42,11 @@
 
             .article_label{
                 font-family: 'Montserrat', sans-serif;
+            }
+
+            text.shadow{
+                stroke: #14171A;
+                stroke-opacity: 0.15;
             }
         </style>
     </head>

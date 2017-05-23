@@ -8,6 +8,16 @@
 * @since 1.0.0
 */
 
+
+/**
+* AUDIOHANDLER MODULE
+* ===================
+*
+* Module holding the functionality for howler.js
+* audio playback
+*
+* @since 1.0.0
+*/
 var AudioHandler = (function(){
 
 	//River audio file reference

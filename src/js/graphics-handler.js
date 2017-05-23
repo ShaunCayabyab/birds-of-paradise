@@ -170,7 +170,7 @@ function TweetCircle(someTweetData, svg_area){
 	this.radius = (Math.random() * 20) + 5;
 	this.corona_radius = this.radius + 40;
 	this.x = ( Math.random() * ( svg_area.attr("width") - ((this.radius * 2) + (this.corona_radius * 2)) ) ) + this.radius;
-	this.y = ( Math.random() * ( svg_area.attr("height") - ((this.radius * 2) + (this.corona_radius * 2) ) )) + this.radius;
+	this.y = ( Math.random() * ( svg_area.attr("height") - ((this.radius * 2) + (this.corona_radius * 2)) ) ) + this.radius;
 	
 	this.circle_color = '#E1E8ED';
 	this.text_color = '#FFF';
@@ -178,7 +178,7 @@ function TweetCircle(someTweetData, svg_area){
 	this.inner_opacity = 1;
 	this.outer_opacity = 0.3;
 	this.decay = 5000;
-	this.outer_decay = 2500;
+	this.outer_decay = 1000;
 	this.text_decay = 8000;
 
 	//Transition deltas for size
@@ -209,18 +209,71 @@ function TweetCircle(someTweetData, svg_area){
 		//Add the circle to the window for rendering
 		var circle = circle_area.append('circle');
 
-		//Draw and animate the inner circle
-		circle.attr('r', this.radius)
-			.attr('fill', this.circle_color)
+		//Add in the SVG elements
+		this.drawBird(circle_area);
+		this.drawCorona(circle_area);
+
+		//Add in the Twitter username
+		var tweet_text01 = circle_area.append('text')
+			.text(someTweetData.user)
+			.classed('header-label', true)
+			.classed('shadow', true)
+			.attr('text-anchor', 'middle')
+			.attr('font-size', '1.7em')
+			.style('color', this.text_color)
 			.transition()
-			.attr('r', this.radius + this.inner_growth)
-			.ease(Math.sqrt)
-			.duration(this.decay)
+			.delay(1000)
 			.style('opacity', 0)
+			.duration(this.text_decay)
 			.remove();
 
+		//Sub text
+		var tweet_text_sub = circle_area.append('text')
+			.attr("dy", '1.1em')
+			.text("tweeted a bird")
+			.classed('sub-label', true)
+			.classed('shadow', true)
+			.attr('text-anchor', 'middle')
+			.attr('font-size', '1em')
+			.style('color', this.text_color)
+			.transition()
+			.delay(1000)
+			.style('opacity', 0)
+			.duration(this.text_decay)
+			.remove();
+	
+		//Add in the Tweet text
+		var tweet_text02 = circle_area.append('text')
+			.attr("dy", "2.8em")
+			.text(someTweetData.text)
+			.classed('article-label', true)
+			.classed('shadow', true)
+			.attr('text-decoration', 'overline')
+			.attr('text-anchor', 'middle')
+			.attr('font-size', '0.9em')
+			.style('color', this.text_color)
+			.transition()
+			.delay(1000)
+			.style('opacity', 0)
+			.duration(this.text_decay)
+			.remove();
+	}
+
+
+	/**
+	* drawCorona
+	* ==========
+	*
+	* Function for drawing the growing circle that surrounds
+	* the Tweet and bird.
+	*
+	* @since 1.0.0
+	* @param someArea 	The SVG canvas area to append the bird to
+	*/
+	this.drawCorona = function(someArea){
+
 		//Add the outer circle
-		var corona = circle_area.append('circle');
+		var corona = someArea.append('circle');
 
 		//Draw and animate
 		corona.attr('r', this.corona_radius)
@@ -233,40 +286,30 @@ function TweetCircle(someTweetData, svg_area){
 			.ease(Math.sqrt)
 			.duration(this.outer_decay)
 			.remove();
+	}
 
-		//Add in the Twitter username
-		var tweet_text01 = circle_area.append('text')
-			.text(someTweetData.user + ":")
-			.classed('header-label', true)
-			.classed('shadow', true)
-			.attr('text-anchor', 'middle')
-			.attr('font-size', '1.7em')
-			.style('opacity', '1')
-			.style('color', this.text_color)
-			.style('font-family', "'Montserrat', sans-serif")
-			.style('font-weight', 'bold')
+
+	/**
+	* drawBird
+	* ========
+	*
+	* Function for appending a bird SVG to the canvas
+	*
+	* @since 1.0.0
+	* @param someArea 	The SVG canvas area to append the bird to
+	*/
+	this.drawBird = function(someArea){
+
+		var bird = someArea.append('image')
+			.attr("xlink:href", "/src/images/white-bird.svg")
+			.classed("bird", true)
+			.attr("width", 100)
+			.attr("height", 100)
+			.attr("transform", "translate(-50,-105)")
 			.transition()
-			.delay(1000)
+			.duration(this.decay)
 			.style('opacity', 0)
-			.duration(this.text_decay)
 			.remove();
-	
-		//Add in the Tweet text
-		var tweet_text02 = circle_area.append('text')
-			.attr("dy", "1.5em")
-			.text(someTweetData.text)
-			.classed('article-label', true)
-			.classed('shadow', true)
-			.attr('text-anchor', 'middle')
-			.attr('font-size', '0.9em')
-			.style('opacity', '1')
-			.style('color', this.text_color)
-			.style('font-family', "'Montserrat', sans-serif")
-			.style('font-weight', 'bolder')
-			.transition()
-			.delay(1000)
-			.style('opacity', 0)
-			.duration(this.text_decay)
-			.remove();
+
 	}
 }

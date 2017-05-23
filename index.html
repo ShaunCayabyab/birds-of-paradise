@@ -10,7 +10,7 @@
         <script type="text/javascript" src="/src/js/audio-handler.js"></script>
         <script type="text/javascript" src="/src/js/graphics-handler.js"></script>
         <script>
-            var socket = io.connect('http://localhost');
+            var socket = io.connect('192.168.1.24');
             jQuery(function ($) {
                 CanvasArea.initCanvas();
                 var tweetList = $('ul.tweets');
@@ -36,17 +36,30 @@
                 padding: 0;
             }
 
-            .header_label{
+            text.header-label, text.sub-label{
                 font-family: 'Montserrat', sans-serif;
+                font-weight: bold;
+                opacity: 1;
             }
 
-            .article_label{
+            text.article-label{
                 font-family: 'Montserrat', sans-serif;
+                font-weight: bolder;
+                opacity: 1;
             }
 
             text.shadow{
                 stroke: #14171A;
                 stroke-opacity: 0.15;
+            }
+
+            text.article-label{
+                visibility: hidden;
+            }
+
+            .bird:hover ~ .article-label, .header-label:hover ~ .article-label{
+                visibility: visible;
+                pointer-events: all;
             }
         </style>
     </head>

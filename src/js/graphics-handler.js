@@ -210,16 +210,15 @@ function TweetCircle(someTweetData, svg_area){
 		var circle = circle_area.append('circle');
 
 		//Add in the SVG elements
-		this.drawBird(circle_area);
 		this.drawCorona(circle_area);
+		this.drawBird(circle_area);
 
 		//Add in the Twitter username
 		var tweet_text01 = circle_area.append('text')
 			.text(someTweetData.user)
 			.classed('header-label', true)
-			.classed('shadow', true)
 			.attr('text-anchor', 'middle')
-			.attr('font-size', '1.7em')
+			.attr('font-size', '1.3em')
 			.style('color', this.text_color)
 			.transition()
 			.delay(1000)
@@ -229,12 +228,11 @@ function TweetCircle(someTweetData, svg_area){
 
 		//Sub text
 		var tweet_text_sub = circle_area.append('text')
-			.attr("dy", '1.1em')
+			.attr("dy", '1.2em')
 			.text("tweeted a bird")
 			.classed('sub-label', true)
-			.classed('shadow', true)
 			.attr('text-anchor', 'middle')
-			.attr('font-size', '1em')
+			.attr('font-size', '0.8em')
 			.style('color', this.text_color)
 			.transition()
 			.delay(1000)
@@ -247,10 +245,9 @@ function TweetCircle(someTweetData, svg_area){
 			.attr("dy", "2.8em")
 			.text(someTweetData.text)
 			.classed('article-label', true)
-			.classed('shadow', true)
 			.attr('text-decoration', 'overline')
 			.attr('text-anchor', 'middle')
-			.attr('font-size', '0.9em')
+			.attr('font-size', '0.8em')
 			.style('color', this.text_color)
 			.transition()
 			.delay(1000)
@@ -277,6 +274,7 @@ function TweetCircle(someTweetData, svg_area){
 
 		//Draw and animate
 		corona.attr('r', this.corona_radius)
+			.classed("corona", true)
 			.attr('fill', this.circle_color)
 			.style('opacity', this.outer_opacity);
 
@@ -303,9 +301,9 @@ function TweetCircle(someTweetData, svg_area){
 		var bird = someArea.append('image')
 			.attr("xlink:href", "/src/images/white-bird.svg")
 			.classed("bird", true)
-			.attr("width", 100)
-			.attr("height", 100)
-			.attr("transform", "translate(-50,-105)")
+			.attr("width", 80)
+			.attr("height", 80)
+			.attr("transform", "translate(-40,-90)")
 			.transition()
 			.duration(this.decay)
 			.style('opacity', 0)

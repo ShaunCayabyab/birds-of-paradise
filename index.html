@@ -10,7 +10,7 @@
         <script type="text/javascript" src="/src/js/audio-handler.js"></script>
         <script type="text/javascript" src="/src/js/graphics-handler.js"></script>
         <script>
-            var socket = io.connect('192.168.1.24');
+            var socket = io.connect('192.168.1.24:8080');
             jQuery(function ($) {
                 CanvasArea.initCanvas();
                 var tweetList = $('ul.tweets');
@@ -48,15 +48,10 @@
                 opacity: 1;
             }
 
-            text.shadow{
-                stroke: #14171A;
-                stroke-opacity: 0.15;
-            }
-
             text.article-label{
                 visibility: hidden;
             }
-
+            
             .bird:hover ~ .article-label, .header-label:hover ~ .article-label{
                 visibility: visible;
                 pointer-events: all;
@@ -66,5 +61,9 @@
     <body>
         <div id="area" style="overflow-x: hidden;">
         </div>
+        <section id="about">
+        </section>
+        <footer>
+        </footer>
     </body>
 </html>

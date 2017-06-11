@@ -33,8 +33,9 @@ var client = new Twitter({
 console.log(chalk.blue("Starting application..."));
 
 //Listen to port
-server.listen(80, function(){
-	console.log(chalk.green("Application started! Listening to port: " + 3000));
+var port = process.env.PORT || 8080;
+server.listen(port, function(){
+	console.log(chalk.green("Application started! Listening to: " + port));
 });
 
 //Serve the static files
